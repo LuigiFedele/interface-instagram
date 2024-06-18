@@ -1,118 +1,76 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList} from 'react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import Header from './src/Header'
+import List from './src/List'
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default function App(){
+  const [feed,setFeed] = useState([
+    {
+      id: '1', 
+      nome: 'Lucas Silva', 
+      descricao: 'Mais um dia de muitos bugs :)', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',  
+      likeada: true, 
+      likers: 1
+     },
+    {
+      id: '2', 
+      nome: 'Matheus', 
+      descricao: 'Isso sim é ser raiz!!!!!', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png', 
+      likeada: false, 
+      likers: 0
+    },
+    {
+      id: '3', 
+      nome: 'Jose Augusto', 
+      descricao: 'Bora trabalhar, hoje estou começando em um projeto novo aqui no sujeito, desde o backend ao frontend', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',  
+      likeada: false, 
+      likers: 3
+    },
+    {
+      id: '4', 
+      nome: 'Gustavo Henrique', 
+      descricao: 'Isso sim que é TI!', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png', 
+      likeada: false, 
+      likers: 1
+    },
+    {
+      id: '5', 
+      nome: 'Guilherme', 
+      descricao: 'Boa tarde galera do insta...', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+      likeada: false, 
+      likers: 32
+    }
+  ])
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+    
+      <Header/>
+
+      <FlatList
+      data={feed}
+      showsVerticalScrollIndicator={false}
+      keyExtractor={ ( item )=> item.id}
+      renderItem={ ({ item })=> <List data={item} />}
+      />
+
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
   },
 });
-
-export default App;
